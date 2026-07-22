@@ -25,8 +25,8 @@ This internship aims to teach interns the fundamentals of systems biology & stru
 
 ### Session 1: Introduction to systems biology & biological networks:
 
-- **Presentation:** 
-- **Recording:**
+- [Presentation](Presentations/SysBio_Internship_1-1_compressed.pdf)
+- [Recording](https://nileuniversity-my.sharepoint.com/:v:/g/personal/nmsabry_nu_edu_eg/IQDI-UGBAjiaQZVSzdAhXB-HAcn5MDI9lqspjO8A0xW46b4?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=Sth9XZ)
 - **Extra notes & resources:**
 
 ## Phase 2: Computer-Aided Drug Discovery
