@@ -2,7 +2,12 @@
 
 ## Description:
 
-This internship aims to teach interns the fundamentals of systems biology & structural bioinformatics. Throughout this internship, interns will learn how computational biology can be used to identify key genes driving disease and how to discover potential drug candidates.
+- This internship was hosted by the Biotechnology Research & Innovation (BRIC) centre at Nile University, and was instructed by me under the supervision of Prof. Sameh Hassanein. 
+- This internship aims to teach interns the fundamentals of systems biology & structural bioinformatics. Throughout this internship, interns will learn how computational biology can be used to identify key genes driving disease and how to discover potential drug candidates.
+- In the systems biology phase, interns learned (WIP)
+- In the computer-aided drug discovery phase, interns learned (WIP)
+
+---
 
 ## Syllabus:
 
@@ -20,6 +25,7 @@ This internship aims to teach interns the fundamentals of systems biology & stru
 | Phase 2 – CADD   |      10 |    6 | 24/8 | QSAR, pharmacophore, similarity search, ADMET, molecular dynamics | Theoretical + practical | Project – Bonus task    |
 | Phase 2 – CADD   |      11 |    6 | 27/8 | What’s next + capstone project discussion                         | Discussion              | —                       |
 
+---
 
 ## Phase 1: Systems Biology
 
@@ -27,8 +33,11 @@ This internship aims to teach interns the fundamentals of systems biology & stru
 
 - [Presentation](Presentations/SysBio_Internship_1-1_compressed.pdf)
 - [Recording](https://nileuniversity-my.sharepoint.com/:v:/g/personal/nmsabry_nu_edu_eg/IQDI-UGBAjiaQZVSzdAhXB-HAcn5MDI9lqspjO8A0xW46b4?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=Sth9XZ)
-- **Extra notes & resources:**
+
+---
 
 ## Phase 2: Computer-Aided Drug Discovery
+
+---
 
 ## Capstone project reproducibility tutorial:
