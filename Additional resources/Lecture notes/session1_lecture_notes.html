@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 1 — Lecture Notes · Systems Biology & Biological Networks</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg:#f0f2f7;--surface:#fff;--sf2:#f5f6fa;--border:#dde0ea;--border2:#c8ccd8;
+  --ink:#131825;--muted:#6b7289;--muted2:#9aa0b8;
+  --navy:#0f1e3d;--blue:#1e4080;--mid:#2e62c8;--sky:#5b9bd5;
+  --teal:#1a7a7a;--gold:#c8921a;--red:#b83a2a;--green:#1e7a4a;--purple:#5a3a90;
+  --amber:#d4a040;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;min-height:100vh}
+
+/* HEADER */
+.hd{background:var(--navy);padding:0;position:relative;overflow:hidden}
+.hd::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,rgba(46,98,200,.35) 0%,transparent 60%),radial-gradient(ellipse at 15% 75%,rgba(90,58,144,.2) 0%,transparent 55%);pointer-events:none}
+.hd-inner{position:relative;z-index:1;padding:2.5rem 3rem 2rem;max-width:920px;margin:0 auto}
+.hd-eye{font-family:'DM Mono',monospace;font-size:.57rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.7rem;display:flex;gap:1.4rem;flex-wrap:wrap}
+.hd-eye span{color:var(--sky)}
+.hd-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,3rem);line-height:1.1;color:#fff;margin-bottom:.4rem}
+.hd-title em{color:var(--sky);font-style:italic}
+.hd-sub{font-size:.88rem;color:rgba(255,255,255,.45);line-height:1.65;font-weight:300}
+
+/* CONTENT */
+.page{max-width:920px;margin:0 auto;padding:2.5rem 2rem 6rem}
+
+/* SLIDE BLOCK */
+.slide{background:var(--surface);border:1px solid var(--border);border-radius:3px;overflow:hidden;margin-bottom:2rem;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.slide-hd{display:grid;grid-template-columns:80px 1fr;border-bottom:1px solid var(--border)}
+.slide-num{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem .5rem;border-right:1px solid var(--border);background:var(--sf2)}
+.sn-label{font-family:'DM Mono',monospace;font-size:.44rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);margin-bottom:.2rem}
+.sn-n{font-family:'DM Serif Display',serif;font-size:1.8rem;line-height:1;color:var(--mid)}
+.slide-meta{padding:.9rem 1.3rem}
+.slide-title{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--ink);margin-bottom:.2rem;line-height:1.3}
+.slide-timing{font-family:'DM Mono',monospace;font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2)}
+.slide-body{padding:1.4rem 1.6rem}
+
+/* WHAT THE SLIDE SAYS */
+.slide-content{background:var(--sf2);border:1px solid var(--border);border-radius:2px;padding:.9rem 1.1rem;margin-bottom:1.1rem;font-size:.83rem;color:var(--muted);line-height:1.65}
+.slide-content-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted2);margin-bottom:.35rem}
+
+/* TEACHING SECTION */
+.teach-section{margin-bottom:1.1rem}
+.ts-label{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;font-weight:500;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.ts-label::before{content:'';width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0}
+.ts-say .ts-label{color:var(--mid)}.ts-say .ts-label::before{background:var(--mid)}
+.ts-ask .ts-label{color:var(--teal)}.ts-ask .ts-label::before{background:var(--teal)}
+.ts-board .ts-label{color:var(--purple)}.ts-board .ts-label::before{background:var(--purple)}
+.ts-warn .ts-label{color:var(--red)}.ts-warn .ts-label::before{background:var(--red)}
+.ts-tip .ts-label{color:var(--gold)}.ts-tip .ts-label::before{background:var(--gold)}
+
+.speech{font-size:.86rem;line-height:1.75;color:var(--ink);padding:.7rem 1rem;background:rgba(46,98,200,.04);border-left:2px solid var(--mid);border-radius:0 2px 2px 0;margin-bottom:.5rem}
+.speech em{color:var(--blue);font-style:italic}
+.speech strong{color:var(--ink);font-weight:600}
+.speech p{margin-bottom:.6rem}
+.speech p:last-child{margin-bottom:0}
+
+.ask{font-size:.86rem;line-height:1.75;color:var(--ink);padding:.7rem 1rem;background:rgba(26,122,122,.04);border-left:2px solid var(--teal);border-radius:0 2px 2px 0;margin-bottom:.5rem}
+.ask strong{color:var(--teal);font-weight:600}
+
+.board{font-size:.83rem;line-height:1.65;color:var(--muted);padding:.7rem 1rem;background:rgba(90,58,144,.04);border-left:2px solid var(--purple);border-radius:0 2px 2px 0;margin-bottom:.5rem}
+.board strong{color:var(--purple);font-weight:500}
+.board code{font-family:'DM Mono',monospace;font-size:.8rem;background:var(--sf2);border:1px solid var(--border);padding:.08rem .3rem;border-radius:2px;color:var(--purple)}
+
+.warn{font-size:.83rem;line-height:1.65;color:var(--muted);padding:.7rem 1rem;background:rgba(184,58,42,.05);border-left:2px solid var(--red);border-radius:0 2px 2px 0;margin-bottom:.5rem}
+.warn strong{color:var(--red);font-weight:500}
+
+.tip{font-size:.83rem;line-height:1.65;color:var(--muted);padding:.7rem 1rem;background:rgba(200,146,26,.05);border-left:2px solid var(--gold);border-radius:0 2px 2px 0;margin-bottom:.5rem}
+.tip strong{color:var(--gold);font-weight:500}
+
+/* ANALOGY BOX */
+.analogy{border:1px solid rgba(46,98,200,.25);border-radius:3px;padding:1rem 1.2rem;margin:.8rem 0;background:rgba(46,98,200,.03)}
+.analogy-label{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-bottom:.4rem}
+.analogy-body{font-size:.84rem;color:var(--muted);line-height:1.7}
+.analogy-body strong{color:var(--ink);font-weight:500}
+
+/* FORMULA */
+.formula{font-family:'DM Mono',monospace;font-size:.85rem;background:var(--navy);color:#7ecba0;padding:.6rem 1rem;border-radius:2px;margin:.5rem 0;display:block;line-height:1.7}
+
+/* KEY CONCEPT */
+.key-concept{border:1px solid var(--border2);border-radius:2px;padding:.9rem 1.1rem;margin:.8rem 0;background:var(--surface)}
+.kc-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);margin-bottom:.25rem}
+.kc-title{font-weight:600;font-size:.9rem;color:var(--ink);margin-bottom:.35rem;line-height:1.3}
+.kc-body{font-size:.83rem;color:var(--muted);line-height:1.65}
+.kc-body ul{padding-left:1rem;margin-top:.25rem}
+.kc-body li{margin-bottom:.2rem}
+
+/* TIMING BAR */
+.timing-bar{display:flex;align-items:center;gap:.8rem;padding:.6rem 1.2rem;background:var(--sf2);border-top:1px solid var(--border);font-family:'DM Mono',monospace;font-size:.58rem;color:var(--muted2);letter-spacing:.08em}
+.tb-dot{width:7px;height:7px;border-radius:50%;background:var(--mid);flex-shrink:0}
+
+/* OVERALL TIMELINE */
+.session-tl{background:var(--surface);border:1px solid var(--border);border-radius:3px;overflow:hidden;margin-bottom:2rem}
+.stl-hd{padding:.9rem 1.4rem;background:var(--navy);color:#fff;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase}
+.stl-row{display:grid;grid-template-columns:70px 1fr;border-bottom:1px solid var(--border)}
+.stl-row:last-child{border-bottom:none}
+.stl-time{padding:.7rem .8rem;border-right:1px solid var(--border);font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted2);display:flex;align-items:center;background:var(--sf2)}
+.stl-body{padding:.7rem 1.1rem;font-size:.83rem;color:var(--muted)}
+.stl-body strong{color:var(--ink);font-weight:500}
+
+/* ADD NOTE */
+.add-note{background:rgba(30,122,74,.05);border:1px solid rgba(30,122,74,.2);border-radius:2px;padding:.9rem 1.1rem;margin:1rem 0}
+.add-note-label{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:.4rem;font-weight:500}
+.add-note-body{font-size:.83rem;color:var(--muted);line-height:1.65}
+.add-note-body strong{color:var(--ink);font-weight:500}
+
+@media(max-width:640px){
+  .hd-inner{padding:2rem 1.2rem 1.5rem}
+  .page{padding:1.5rem 1rem 4rem}
+  .slide-hd{grid-template-columns:60px 1fr}
+  .stl-row{grid-template-columns:55px 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <div class="hd-inner">
+    <div class="hd-eye"><span>Session 1 of 11</span><span style="opacity:.3">·</span><span>Lecture Notes</span><span style="opacity:.3">·</span><span>90–120 min target</span></div>
+    <div class="hd-title">Introduction to<br><em>Systems Biology</em><br>& Biological Networks</div>
+    <div class="hd-sub">Comprehensive word-for-word teaching notes with analogies, discussion prompts, whiteboard cues, and timing. Written for a 90–120 minute delivery. All gaps in the slides are filled here.</div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SESSION OVERVIEW -->
+<div class="session-tl">
+  <div class="stl-hd">Session 1 — Timing Overview (target: 90–120 min)</div>
+  <div class="stl-row"><div class="stl-time">0:00</div><div class="stl-body"><strong>Opening + learning outcomes</strong> — what today covers, what they'll be able to do by the end (5 min)</div></div>
+  <div class="stl-row"><div class="stl-time">0:05</div><div class="stl-body"><strong>The reductionist problem</strong> — the 6/9 analogy, why biology alone isn't enough (10 min)</div></div>
+  <div class="stl-row"><div class="stl-time">0:15</div><div class="stl-body"><strong>Systems biology definition</strong> — what it is, how it thinks, the pipeline slogan (10 min)</div></div>
+  <div class="stl-row"><div class="stl-time">0:25</div><div class="stl-body"><strong>Biological networks & graph theory</strong> — nodes, edges, types of edges, types of graphs (15 min)</div></div>
+  <div class="stl-row"><div class="stl-time">0:40</div><div class="stl-body"><strong>Network topology</strong> — degree, clustering coefficient, density, scale-free (15 min)</div></div>
+  <div class="stl-row"><div class="stl-time">0:55</div><div class="stl-body"><strong>Centrality measures</strong> — degree centrality, betweenness, closeness, hub/bottleneck/hub-bottleneck (20 min)</div></div>
+  <div class="stl-row"><div class="stl-time">1:15</div><div class="stl-body"><strong>Types of biological networks</strong> — PPI, metabolic, gene regulatory, genetic, signalling (15 min)</div></div>
+  <div class="stl-row"><div class="stl-time">1:30</div><div class="stl-body"><strong>Workflow slide + wrap-up</strong> — the logic of going from disease to network, preview of Session 2 (10 min)</div></div>
+</div>
+
+<div class="add-note">
+  <div class="add-note-label">Before you start</div>
+  <div class="add-note-body">Move the <strong>learning outcomes slide</strong> to the beginning of the session, not the end. Show it first, briefly, so interns know what they're building toward. Then show it again at the end as a recap. The closing thank-you slide becomes your exit cue, not a content slide. The current order has this inverted.</div>
+</div>
+
+<!-- ══ SLIDE 1: TITLE ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">1</div></div>
+    <div class="slide-meta"><div class="slide-title">Title Slide</div><div class="slide-timing">0:00 — 2 min</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="teach-section ts-say">
+      <div class="ts-label">What to say</div>
+      <div class="speech">
+        <p>Welcome to the first session. Over the next few weeks you'll be learning two interconnected fields — systems biology and computer-aided drug discovery — and applying them to a real research project by the end. Today is the foundation for everything else: if you understand what a network is and why we use one to study disease, the rest of the internship will make sense. If you don't, it won't. So this session matters.</p>
+        <p>Let me start by telling you what you'll be able to do by the end of today. <em>[show learning outcomes slide briefly]</em> You'll be able to explain what systems biology is and why it exists, read a biological network and identify its key features, and understand the difference between hubs, bottlenecks, and modules. These concepts are the vocabulary for every session that follows.</p>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>0:00 → 0:02 · Move to slide 2 promptly</div>
+</div>
+
+<!-- ══ SLIDE 2: REDUCTIONIST PROBLEM ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">2</div></div>
+    <div class="slide-meta"><div class="slide-title">The Reductionist Problem</div><div class="slide-timing">0:02 — 12 min</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="slide-content">
+      <div class="slide-content-label">What the slide says</div>
+      Each biologist specialises in one area of biology. Neither of them are wrong, but neither tell the whole story. Biology alone isn't enough — we need physics, math, chemistry, and computer science. Illustration: two people arguing about whether a symbol on the ground is a 6 or a 9.
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">The 6/9 analogy — explain this fully, don't rush it</div>
+      <div class="speech">
+        <p>Look at the illustration. Two people standing over a number painted on the ground. One sees a 6. One sees a 9. They're arguing. Who's right? <em>[pause]</em> They're both right. They're also both incomplete. Each person is observing accurately from their own position — but neither has access to the full picture.</p>
+        <p>This is exactly how biology has worked for most of the twentieth century. One scientist studies TNF-alpha. Another studies IL-6. Another studies AKT. Each of them produces careful, accurate, peer-reviewed science. But none of them can tell you how TNF-alpha and IL-6 and AKT interact with each other to produce the disease state we call rheumatoid arthritis. They're all looking at the same ground from different angles, arguing about whether it's a 6 or a 9.</p>
+        <p>Now — what could they do to resolve this? The slide gives you four answers. Let's go through them quickly because each one maps directly to something we do in systems biology.</p>
+      </div>
+    </div>
+
+    <div class="teach-section ts-board">
+      <div class="ts-label">Write on whiteboard as you say each one</div>
+      <div class="board">
+        <strong>Communicate perspectives</strong> → in biology: share your data, publish, collaborate across specialities<br>
+        <strong>Gather more context</strong> → in biology: collect data from multiple sources, multiple experiments, multiple patients<br>
+        <strong>Consult an independent source</strong> → in biology: use curated databases that aggregate knowledge (STRING, DisGeNET, GeneCards)<br>
+        <strong>Accept one observation isn't enough</strong> → in biology: this is exactly why we do multi-dataset analyses and why we have Venn diagrams
+      </div>
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">Continue</div>
+      <div class="speech">
+        <p>The reductionist approach — breaking biology into its smallest pieces and studying each piece in isolation — was essential for building the knowledge base we have today. We know what individual proteins do because of decades of reductionist science. But when you want to understand disease — which is almost never caused by one protein failing in isolation — reductionism runs into a hard limit.</p>
+        <p>A cancer cell doesn't just have one broken gene. It has dozens of interacting mutations, dysregulated pathways, cross-talk between oncogenes and tumour suppressors. If you study each one in isolation, you'll never understand why the cancer behaves the way it does. You need a different framework. That framework is systems biology.</p>
+        <p>The third bullet on this slide is the key one: <strong>biology alone isn't enough</strong>. We need physics to understand molecular forces. We need math to model interactions. We need chemistry to understand drug-receptor binding. And we need computer science to handle the scale. A human PPI network has over 100,000 known interactions. You cannot analyse that in Excel. You need computational tools and mathematical concepts from graph theory.</p>
+      </div>
+    </div>
+
+    <div class="teach-section ts-ask">
+      <div class="ts-label">Discussion prompt — 2 minutes max</div>
+      <div class="ask"><strong>Question to ask:</strong> "Can you think of a disease where studying one gene or one protein clearly isn't enough to explain what's happening?" Let them answer. Likely responses: cancer, diabetes, Alzheimer's. Affirm and use their example — "exactly, and that's exactly the type of disease systems biology was built for."</div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>0:02 → 0:15 · ~12 min including brief discussion</div>
+</div>
+
+<!-- ══ SLIDE 3: SYS BIO HELPS SEE BIG PICTURE ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">3</div></div>
+    <div class="slide-meta"><div class="slide-title">Systems Biology Helps Us See the Big Picture</div><div class="slide-timing">0:15 — 5 min</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="slide-content">
+      <div class="slide-content-label">What the slide says</div>
+      Integrating perspectives · Changing viewpoints · Gathering more context · Consulting independent evidence · Combining observations. Illustrated with a llama eye zoomed in showing an unexpected structure.
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">What to say</div>
+      <div class="speech">
+        <p>This slide is the bridge between the analogy and the definition. Look at the image — a llama's eye. From a distance, you see an eye. Zoom in, and you see an intricate structure — the iris has a complexity that's completely invisible at the whole-animal level. But if you only ever looked at the iris cells in isolation, you'd have no idea what a llama looks like. Systems biology is about maintaining both views simultaneously.</p>
+        <p>Each of these five bullets — integrating perspectives, changing viewpoints, gathering more context, consulting independent evidence, combining observations — maps directly onto steps we'll execute over the next six sessions. We're going to query multiple databases (gathering context), build a network (integrating), calculate topology (changing viewpoints), and validate against published data (consulting independent evidence).</p>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>0:15 → 0:20 · 5 min, keep moving</div>
+</div>
+
+<!-- ══ SLIDE 4: SYSTEMS BIOLOGY DEFINITION ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">4</div></div>
+    <div class="slide-meta"><div class="slide-title">Systems Biology — Definition</div><div class="slide-timing">0:20 — 10 min</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="slide-content">
+      <div class="slide-content-label">What the slide says</div>
+      Systems biology is a way of thinking before it is a set of tools. Interdisciplinary field, computational and mathematical models, complex interactions within biological systems. Holistic approach. Studies emergent properties. Pipeline: Partial observation → Different interpretations → Conflict → Reflection → Integration → Complete understanding.
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">The most important sentence on this slide</div>
+      <div class="speech">
+        <p>The first bullet is the most important sentence in this slide and possibly in this whole session: <strong>"Systems biology is a way of thinking before it is a set of tools."</strong> Please write that down.</p>
+        <p>I'm going to be teaching you tools over the coming weeks — Cytoscape, STRING, AutoDock Vina, SwissADME. Tools are learnable in an afternoon. The way of thinking takes longer. And it's the thinking that makes the difference between someone who can run a pipeline and someone who understands what the pipeline is actually doing.</p>
+        <p>So what is the thinking? It's this: instead of asking "what does protein X do?", you ask "how does protein X's interactions with all its partners create a disease state?" You move from studying parts to studying relationships. The parts are still important — but they only make sense in context.</p>
+      </div>
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">On emergent properties — this needs explaining</div>
+      <div class="speech">
+        <p>The slide mentions "emergent properties" — this is a term you'll see everywhere in systems biology, so let me explain it with a concrete example. Take water. Hydrogen and oxygen are both gases. Neither is wet. But combine them in the right structure and you get wetness — a property that neither component has individually. Wetness is an emergent property of the interaction between H and O molecules.</p>
+        <p>The same principle applies in biology. TNF-alpha alone doesn't cause joint destruction. IL-6 alone doesn't cause synovial hyperplasia. But the interaction between TNF-alpha, IL-6, IL-1β, and a dozen other proteins in the context of a synovial joint — that interaction produces rheumatoid arthritis. The disease is an emergent property of the network. You cannot understand or treat it by studying any single node.</p>
+      </div>
+    </div>
+
+    <div class="teach-section ts-board">
+      <div class="ts-label">Write the pipeline on the board and explain each step</div>
+      <div class="board">
+        <code>Partial observation → Different interpretations → Conflict → Reflection → Integration → Complete understanding</code><br><br>
+        Say: "This is the scientific method, reframed for systems biology. We start with incomplete data — always. Different people analyse it differently — always. The conflict forces us to think harder. Reflection means we question our assumptions. Integration means we combine all the evidence. And complete understanding is asymptotic — we never fully get there, but each iteration gets us closer."
+      </div>
+    </div>
+
+    <div class="analogy">
+      <div class="analogy-label">Analogy to use if they look confused</div>
+      <div class="analogy-body">Think of a city's traffic system. A single traffic light doesn't determine whether the city has traffic jams. It's the emergent behaviour of thousands of lights, drivers, road layouts, and time-of-day patterns interacting. A systems biologist studying a city wouldn't count cars at one intersection. They'd build a network of all intersections and model the flow through the whole system.</div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>0:20 → 0:30 · 10 min</div>
+</div>
+
+<!-- ══ SLIDE 5: BIOLOGICAL NETWORKS & GRAPH THEORY ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">5</div></div>
+    <div class="slide-meta"><div class="slide-title">Biological Networks & Graph Theory</div><div class="slide-timing">0:30 — 8 min</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="slide-content">
+      <div class="slide-content-label">What the slide says</div>
+      Mathematical modelling of complex biological systems as networks. Nodes (vertices) = biological entities. Edges (arrows) = interactions. Translates intricate biological data into structures. Deals with properties of graphs. Allows representation and analysis using graph theory tools.
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">What to say — make this very concrete</div>
+      <div class="speech">
+        <p>Graph theory is a branch of mathematics that dates back to 1736 — Euler solving the Seven Bridges of Königsberg problem. For our purposes, all you need to know is this: a graph is a set of dots connected by lines. In mathematics, the dots are called vertices and the lines are called edges. In biology, we call them nodes and edges, but it's the same concept.</p>
+        <p>Why does this matter? Because it gives us a mathematical framework for studying biology. Instead of describing protein interactions in prose — "protein A binds to protein B which then phosphorylates protein C" — we represent the whole system as a graph and use mathematical tools to analyse it. We can ask quantitative questions: which node is most central? Which edge is most critical? Which cluster of nodes are most interconnected? These are mathematical questions with mathematical answers, and they're much more rigorous than intuition.</p>
+      </div>
+    </div>
+
+    <div class="key-concept">
+      <div class="kc-label">Key Concept</div>
+      <div class="kc-title">What goes where in a biological network</div>
+      <div class="kc-body">
+        <ul>
+          <li><strong>Node = biological entity:</strong> in a PPI network, a node is a protein. In a metabolic network, nodes are metabolites or enzymes. In a gene regulatory network, nodes are genes and transcription factors.</li>
+          <li><strong>Edge = relationship:</strong> in a PPI network, an edge means these two proteins physically interact. In a metabolic network, a directed edge means this enzyme catalyses this reaction. In a signalling network, a directed edge with an arrowhead means activation; with a flat end means repression.</li>
+          <li><strong>The same protein can appear in multiple network types</strong> — AKT1, for example, is a node in PPI networks, signalling networks, and metabolic networks simultaneously.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>0:30 → 0:38 · 8 min</div>
+</div>
+
+<!-- ══ SLIDE 6: GRAPH THEORY — PROPERTIES ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">6</div></div>
+    <div class="slide-meta"><div class="slide-title">Graph Theory — Properties of Graphs (Nodes, Edges, Repression/Activation)</div><div class="slide-timing">0:38 — 5 min</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="teach-section ts-say">
+      <div class="ts-label">What to say</div>
+      <div class="speech">
+        <p>This slide introduces two basic building blocks. A node represents an entity — a protein, gene, metabolite, or cell type depending on what type of network you're building. Two nodes connected by an edge are called neighbours in graph theory language. This matters because many centrality calculations are based on counting neighbours, or counting neighbours of neighbours.</p>
+        <p>Edges represent relationships. But not all edges are the same. In a PPI network, edges are symmetric — if protein A binds B, then B also binds A. But in regulatory networks, edges have direction and sign. A directed arrow with a standard arrowhead means activation: gene A activates gene B. A directed arrow with a flat end means repression: gene A represses gene B. The sign matters enormously for understanding how perturbations propagate through the network.</p>
+      </div>
+    </div>
+    <div class="tip">
+      <strong>Teaching tip:</strong> Draw a simple 4-node graph on the whiteboard right now. Label two nodes, draw an activating edge between them, and a repressing edge from a third node. Point to the flat-ended edge and the arrowhead as you describe them. This simple drawing will be referenced multiple times as the session continues.
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>0:38 → 0:43 · 5 min</div>
+</div>
+
+<!-- ══ SLIDE 7: TYPES OF EDGES ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">7</div></div>
+    <div class="slide-meta"><div class="slide-title">Types of Edges</div><div class="slide-timing">0:43 — 4 min</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="teach-section ts-say">
+      <div class="ts-label">Keep this tight — 4 types, 1 sentence each</div>
+      <div class="speech">
+        <p><strong>Directed:</strong> The edge has a source and a target — information flows one way. Used in signalling networks, gene regulatory networks, metabolic networks. "A phosphorylates B" is different from "B phosphorylates A".</p>
+        <p><strong>Undirected:</strong> The relationship is symmetric — no defined source or target. Used in PPI networks where binding is mutual. "A binds B" is the same as "B binds A".</p>
+        <p><strong>Bidirectional:</strong> Directed but in both directions simultaneously. Represents feedback — A activates B which in turn activates A. Common in regulatory loops and co-activation scenarios.</p>
+        <p><strong>Regulation arrows:</strong> Directed edges with an additional sign encoding whether the interaction is activating (positive) or inhibitory (negative). The colours in the figure — red for inhibition, blue for activation — are a common convention but not universal across tools. Always check the legend.</p>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>0:43 → 0:47 · 4 min</div>
+</div>
+
+<!-- ══ SLIDE 8: BASIC NETWORK COMPONENTS ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">8</div></div>
+    <div class="slide-meta"><div class="slide-title">Basic Network Components — Directed, Undirected, Weighted, Bipartite</div><div class="slide-timing">0:47 — 6 min</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="slide-content">
+      <div class="slide-content-label">What the slide says</div>
+      Directed / Undirected / Weighted / Bipartite — with visual examples of each.
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">The one that needs extra explanation is Weighted and Bipartite</div>
+      <div class="speech">
+        <p>Directed and undirected you already know. <strong>Weighted</strong> means that edges carry a numerical value — not just "are these two proteins connected?" but "how strongly are they connected?" In STRING, every interaction has a combined score between 0 and 1 representing the confidence of the interaction based on experimental evidence, co-expression, text mining, and other sources. When we import a STRING network into Cytoscape, we'll use these weights to set edge thickness — thicker edge = more confident interaction.</p>
+        <p><strong>Bipartite</strong> is a graph where nodes fall into two distinct categories, and edges only go between categories — never within them. A classic biological example: transcription factors and their target genes. TFs are one type of node, target genes are another. Edges only go from TFs to targets, never TF-to-TF or target-to-target. Drug-target networks are also bipartite: drugs on one side, proteins on the other.</p>
+      </div>
+    </div>
+
+    <div class="teach-section ts-ask">
+      <div class="ts-label">Quick check question</div>
+      <div class="ask"><strong>Ask:</strong> "If I build a PPI network from STRING with confidence scores — is it directed or undirected? Is it weighted or unweighted?" Expected answer: undirected (binding is symmetric), weighted (STRING provides scores). If they get it wrong, correct gently and explain why.</div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>0:47 → 0:53 · 6 min</div>
+</div>
+
+<!-- ══ SLIDE 9: NETWORK BIOLOGY / TOPOLOGY ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">9</div></div>
+    <div class="slide-meta"><div class="slide-title">Network Biology — Topology, Small-World, Scale-Free, Transitivity</div><div class="slide-timing">0:53 — 12 min · this slide needs significant extra explanation</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="slide-content">
+      <div class="slide-content-label">What the slide says</div>
+      Topology = arrangement of nodes and edges. Can apply to whole network or individual nodes/edges. Three main characteristics: small-world effect (~6 steps), scale-free (hubs), transitivity (communities).
+    </div>
+
+    <div class="add-note">
+      <div class="add-note-label">Gap in the slide — explain scale-free networks fully</div>
+      <div class="add-note-body">The slide mentions scale-free networks but doesn't explain what makes a network scale-free or why it matters. This is critical for understanding why hubs exist and why they're drug targets. Spend ~5 minutes here.</div>
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">On small-world effect</div>
+      <div class="speech">
+        <p>Small-world effect: you may have heard of "six degrees of separation" — the idea that any two people on Earth are connected through at most six social links. Biological networks show the same property. In the human PPI network, you can get from any protein to any other protein through on average 6 hops or fewer. This is remarkable given the network has over 20,000 nodes. It means that a perturbation — a mutation, a drug, a pathogen — can propagate across the entire network very quickly, which is why diseases and drug effects are so systemic.</p>
+      </div>
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">On scale-free networks — this is the critical concept, take your time</div>
+      <div class="speech">
+        <p>Scale-free is a property of the degree distribution — the distribution of how many connections each node has. In a random network — like dots connected by randomly drawn lines — most nodes have roughly the same number of connections. The distribution looks like a bell curve centred around the average degree.</p>
+        <p>Biological networks don't look like this. In a scale-free network, the vast majority of nodes have very few connections, and a tiny minority of nodes have an enormous number of connections. The distribution follows a power law — which on a log-log plot looks like a straight line — and has no characteristic scale, which is where the name comes from.</p>
+        <p>The biological implications are profound. Those few extremely well-connected nodes are your hubs — proteins like TP53, AKT1, TNF-alpha. They interact with hundreds of other proteins. If you disrupt a hub, you disrupt a huge fraction of the network. This is why these proteins are so often implicated in disease, and why they're such attractive drug targets. It's also why cancer is so hard to treat — tumours often exploit hub proteins, and disrupting hubs has massive off-target effects throughout the network.</p>
+      </div>
+    </div>
+
+    <div class="board" style="margin:.5rem 0 1rem">
+      <strong>Draw on whiteboard:</strong> two degree distributions side by side — one bell curve labelled "random network", one power-law curve labelled "scale-free network". Under the power-law: most nodes have degree 1–2, very few nodes have degree 50+. Those high-degree nodes are hubs. Draw one hub node with many edges radiating out.
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">On transitivity</div>
+      <div class="speech">
+        <p>Transitivity, also called clustering, refers to the tendency of biological networks to form communities — groups of nodes that are more connected to each other than to the rest of the network. Think of it as "friends of friends tend to be friends". In biology, proteins that function in the same pathway or complex tend to interact with each other more than with random other proteins. This is what produces modules — the dense sub-graphs we'll identify using MCODE in Session 3.</p>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>0:53 → 1:05 · 12 min — don't shortchange this</div>
+</div>
+
+<!-- ══ SLIDE 10: NETWORK TOPOLOGY — DEGREE, CC, DENSITY ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">10</div></div>
+    <div class="slide-meta"><div class="slide-title">Network Topology — Degree, Degree Distribution, Clustering Coefficient, Density</div><div class="slide-timing">1:05 — 8 min</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="slide-content">
+      <div class="slide-content-label">What the slide says</div>
+      Degree (k) = number of edges per node. In directed: in-degree and out-degree. Degree distribution P(k) = probability a random node has degree k. Clustering coefficient (C) = tendency to form cliques. Network density = actual edges / maximum possible edges.
+    </div>
+
+    <div class="add-note">
+      <div class="add-note-label">Gap — degree distribution and clustering coefficient need intuitive explanation</div>
+      <div class="add-note-body">The slide states these definitions but doesn't make them intuitive. Degree distribution especially needs a worked example. Clustering coefficient also needs a numeric illustration.</div>
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">On degree</div>
+      <div class="speech">
+        <p>Degree is the simplest topological property — just count how many edges connect to a node. A node with degree 1 has one neighbour. TP53 in the human PPI network has a degree of several hundred — it interacts with hundreds of other proteins. In directed networks, we split this into in-degree (edges coming in — things that regulate or activate this protein) and out-degree (edges going out — things this protein regulates or activates).</p>
+        <p>Degree is how we identify hubs. In your capstone project, after you build the network in Cytoscape, you'll run Network Analyzer and it will calculate the degree of every node. You'll then compute the mean degree and standard deviation, and set a threshold: any node with degree greater than mean + 2 standard deviations is a hub. That's the operationalisation of the hub concept.</p>
+      </div>
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">On degree distribution — needs a worked example</div>
+      <div class="speech">
+        <p>Degree distribution P(k) answers the question: if I pick a random node in this network, what is the probability it has exactly k connections? For a random network, this follows a Poisson distribution and peaks near the average degree. For a scale-free network, it follows a power law: P(k) is proportional to k to the power of minus-gamma, where gamma is typically between 2 and 3 for biological networks.</p>
+        <p>Why does this matter practically? Because if your network is scale-free, you know that most proteins are poorly connected, and a handful are extremely connected. That distribution tells you where to focus. It also tells you the network is robust to random failure — if you randomly remove proteins, you're more likely to hit low-degree nodes, and the network stays connected. But it's fragile to targeted attacks — remove the hubs and the network fragments. This is the vulnerability we exploit in drug discovery.</p>
+      </div>
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">On clustering coefficient — give a numeric example</div>
+      <div class="speech">
+        <p>The clustering coefficient of a node measures: of all the possible connections between its neighbours, what fraction actually exist? If node A has 4 neighbours — B, C, D, E — there are 6 possible edges between those 4 nodes. If 4 of those 6 exist, the clustering coefficient is 4/6 = 0.67. A value of 1 means all neighbours are connected to each other — a clique. A value of 0 means none of the neighbours are connected to each other.</p>
+        <p>Proteins in tight functional complexes — like ribosomal proteins or proteasome components — have very high clustering coefficients. Signalling hubs that receive input from many different pathways tend to have lower clustering coefficients because their neighbours don't all interact with each other.</p>
+      </div>
+    </div>
+
+    <div class="formula">C(node) = (number of edges between neighbours) / (k × (k−1) / 2)
+where k = degree of the node</div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">On network density — keep brief</div>
+      <div class="speech">
+        <p>Network density is the global version of clustering coefficient — for the whole network. It's the ratio of actual edges to the maximum possible edges. A complete graph (every node connected to every other) has density 1. A tree (minimum connections to keep everything connected) has density approaching 0. Real biological networks are sparse — typically less than 1% of possible edges exist — which is why they look like scattered webs rather than solid blobs.</p>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>1:05 → 1:13 · 8 min</div>
+</div>
+
+<!-- ══ SLIDE 11: CENTRALITY MEASURES ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">11</div></div>
+    <div class="slide-meta"><div class="slide-title">Centrality Measures — Degree, Betweenness, Closeness</div><div class="slide-timing">1:13 — 10 min · most important conceptual slide in the session</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="slide-content">
+      <div class="slide-content-label">What the slide says</div>
+      Degree centrality = connections (hubs, local measure). Betweenness centrality = how often on shortest paths (bottlenecks, controls information flow). Closeness centrality = average distance to all other nodes. Figure shows hub-bottleneck, non-hub-bottleneck, hub-non-bottleneck, non-hub-non-bottleneck nodes.
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">Start with why we need three measures, not just degree</div>
+      <div class="speech">
+        <p>You might wonder: if we can already identify hubs by degree, why do we need betweenness and closeness? This is the key insight of the centrality concept: degree tells you how popular a node is, but it doesn't tell you how important it is for the network's function. Those are different things.</p>
+        <p>Imagine a road network. A major intersection in a city centre has high degree — many roads meet there. But there might be a single bridge connecting two halves of the city that has degree 2 — only two roads — yet every route between the two halves passes through it. Remove the bridge and the city is cut in half. Remove the busy intersection and the city adjusts. The bridge has low degree but enormous betweenness. In biological terms, that bridge is a bottleneck.</p>
+      </div>
+    </div>
+
+    <div class="analogy">
+      <div class="analogy-label">Analogy for betweenness centrality</div>
+      <div class="analogy-body"><strong>Degree centrality</strong> is like measuring how many friends someone has on social media — a measure of local popularity.<br><br><strong>Betweenness centrality</strong> is like measuring how often you need to go through someone to connect two groups — a measure of being a bridge, a gatekeeper, a broker. A person with few friends but who all belong to different communities has very high betweenness — they're the only connection between worlds.</div>
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">Go through each measure precisely</div>
+      <div class="speech">
+        <p><strong>Degree centrality:</strong> equal to the degree — the number of edges a node has. Normalised by dividing by (N-1) where N is total nodes. High degree = hub = well-connected protein. This is a local measure — it only looks at the immediate neighbourhood, not the rest of the network. Two proteins can have the same degree but completely different positions in the network.</p>
+        <p><strong>Betweenness centrality:</strong> measures how often a node lies on the shortest path between any two other nodes. Calculate all shortest paths in the network. For each node, count in how many of those paths it appears. Normalise. High betweenness = bottleneck = information gatekeeper. If you remove a high-betweenness node, you disconnect previously connected parts of the network. These are the proteins that coordinate signal flow between different modules.</p>
+        <p><strong>Closeness centrality:</strong> measures how close a node is to all other nodes — defined as the inverse of the average shortest path distance to every other node. A protein with high closeness can "reach" every other protein quickly. This is useful for identifying proteins that rapidly propagate signals throughout the network. Less commonly used in capstone-type analyses, but important in disease network studies where you want to identify rapidly-acting regulatory nodes.</p>
+      </div>
+    </div>
+
+    <div class="teach-section ts-board">
+      <div class="ts-label">Draw the 4 categories on the whiteboard</div>
+      <div class="board">
+        Draw a 2×2 grid:<br>
+        <strong>High degree, high betweenness → Hub-Bottleneck</strong> (most biologically important, most likely disease gene and drug target)<br>
+        <strong>Low degree, high betweenness → Non-hub Bottleneck</strong> (bridge node — critical for connectivity, often a scaffolding protein or cross-pathway connector)<br>
+        <strong>High degree, low betweenness → Hub non-bottleneck</strong> (popular but contained — many connections within one module, like a ribosomal protein)<br>
+        <strong>Low degree, low betweenness → Non-hub non-bottleneck</strong> (peripheral node — not a focus for drug targeting)<br><br>
+        Point out: <strong>we want hub-bottlenecks as drug targets because disrupting them affects both local connectivity AND information flow between modules.</strong>
+      </div>
+    </div>
+
+    <div class="teach-section ts-warn">
+      <div class="ts-label">Common confusion to pre-empt</div>
+      <div class="warn"><strong>Students often confuse hubs with hub-bottlenecks.</strong> A hub just means high degree. A hub-bottleneck means BOTH high degree AND high betweenness. In the capstone, when they compute hub-bottlenecks, they'll apply both thresholds: degree > mean+2SD AND top 5% betweenness centrality. Only nodes passing BOTH filters are hub-bottlenecks. Emphasise this intersection explicitly.</div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>1:13 → 1:23 · 10 min — this is the most important section, do not rush</div>
+</div>
+
+<!-- ══ SLIDE 12: HUBS & BOTTLENECKS ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">12</div></div>
+    <div class="slide-meta"><div class="slide-title">Hubs & Bottlenecks</div><div class="slide-timing">1:23 — 5 min · recap and reinforce slide 11</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="teach-section ts-say">
+      <div class="ts-label">This slide reinforces the 2x2 you just drew — use it as a structured summary</div>
+      <div class="speech">
+        <p>This slide formally defines what you just drew on the board. I want you to particularly note the last bullet — modules, or communities. Modules are groups of nodes that are more densely connected to each other than to the rest of the network. In Session 3, we'll detect these using an algorithm called MCODE in Cytoscape. Each module typically corresponds to a biological function — a signalling complex, a metabolic pathway branch, a co-regulated gene set.</p>
+        <p>The disease relevance: disease-causing mutations tend to cluster in specific modules. A cancer module, an inflammation module, a cell cycle module. Identifying which module is most disrupted in your disease of interest is a key step toward target identification — because you then know which functional context you're targeting.</p>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>1:23 → 1:28 · 5 min</div>
+</div>
+
+<!-- ══ SLIDE 13: GANGING UP — COMMUNITY/MODULE/COMPLEX/MOTIF ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">13</div></div>
+    <div class="slide-meta"><div class="slide-title">Ganging Up! — Community, Module, Complex, Motif</div><div class="slide-timing">1:28 — 7 min</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="slide-content">
+      <div class="slide-content-label">What the slide says</div>
+      Community/Cluster: more connected within than without → functional modules and protein complexes. Module: functional units, not required to interact simultaneously. Complex: proteins interact at same time and space. Motif: statistically over-represented sub-graphs — correspond to characteristic dynamical responses.
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">The module vs. complex distinction is often confused — explain carefully</div>
+      <div class="speech">
+        <p>The distinction between a module and a complex is subtle but important. A <strong>protein complex</strong> means these proteins are physically bound to each other at the same time and in the same cellular compartment — like the ribosome, or the proteasome, or the cohesin complex. They form a stable multi-protein machine.</p>
+        <p>A <strong>functional module</strong> is more abstract. The proteins in a module are functionally related — they work together to carry out a biological process — but they don't have to be physically present simultaneously. For example, all the proteins in the "cell cycle G1/S checkpoint" form a functional module: some act at G1, some at the G1/S boundary, some at S phase, but they're all functionally related. You wouldn't find them all physically bound to each other at the same time.</p>
+        <p>In network analysis, both complexes and modules show up as dense sub-graphs — clumps of highly interconnected nodes. MCODE, which we'll use in Session 3, doesn't distinguish between them — it just finds dense regions. Your biological interpretation of whether a dense region is a complex or a module comes from the literature and from pathway enrichment analysis.</p>
+      </div>
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">On motifs — keep brief but make it interesting</div>
+      <div class="speech">
+        <p>Motifs are statistically over-represented sub-graphs — specific patterns of connections that appear more often in real biological networks than you'd expect by chance. The classic example is the negative feedback loop: A activates B, B activates C, C inhibits A. This three-node motif appears far more often in gene regulatory networks than random, because it's useful — it creates a damped oscillation that allows a system to respond to a stimulus and then return to baseline. Another common motif is the feed-forward loop, which filters out transient signals and allows only sustained inputs to propagate. Motifs are the "recurring sentences" of biological network grammar.</p>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>1:28 → 1:35 · 7 min</div>
+</div>
+
+<!-- ══ SLIDE 14: HUBS, BOTTLENECKS & MODULES VISUAL ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">14</div></div>
+    <div class="slide-meta"><div class="slide-title">Hubs, Bottlenecks & Modules — Visual Example</div><div class="slide-timing">1:35 — 3 min · visual recap, no new content</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="teach-section ts-say">
+      <div class="ts-label">Use this as a consolidation moment</div>
+      <div class="speech">
+        <p>This figure shows a real network with the four categories labelled — hub-bottleneck in green, non-hub bottleneck in blue, hub non-bottleneck in orange, non-hub non-bottleneck in red. The right side shows three modules with their enriched pathways labelled. Notice how each module corresponds to a specific biological pathway — TNF signalling, IL-6-type cytokine receptor interactions, Th17 cell differentiation. This is exactly what you'll see after you run ClueGO on your capstone network modules in Session 3.</p>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>1:35 → 1:38 · 3 min, keep pace</div>
+</div>
+
+<!-- ══ SLIDE 15: TYPES OF BIOLOGICAL NETWORKS ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">15</div></div>
+    <div class="slide-meta"><div class="slide-title">Types of Biological Networks</div><div class="slide-timing">1:38 — 2 min · overview slide, each type covered next</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="teach-section ts-say">
+      <div class="ts-label">Brief overview before diving into each type</div>
+      <div class="speech">
+        <p>Five main types. The one we'll use in this internship is the PPI network — because we're building a disease gene network and the primary relationships we're interested in are protein-protein physical interactions. But I want you to know the other four exist, because in real research you often integrate multiple network types, and when you're reading papers you'll encounter all of them.</p>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>1:38 → 1:40 · 2 min</div>
+</div>
+
+<!-- ══ SLIDES 16-20: NETWORK TYPES ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slides</div><div class="sn-n">16–20</div></div>
+    <div class="slide-meta"><div class="slide-title">PPI · Metabolic · Genetic · Gene Regulatory · Signalling Networks</div><div class="slide-timing">1:40 — 12 min · 2–3 min per network type</div></div>
+  </div>
+  <div class="slide-body">
+
+    <div class="key-concept">
+      <div class="kc-label">PPI Networks — Slide 16</div>
+      <div class="kc-title">What to add beyond the slide</div>
+      <div class="kc-body">The slide explains what a PPI is. Add: <strong>how we know about PPIs</strong>. The main experimental techniques are yeast two-hybrid (Y2H), which tests pairs of proteins for physical interaction in vivo; co-immunoprecipitation (co-IP), which pulls down a protein and identifies what binds to it; and mass spectrometry approaches (AP-MS). These experiments are curated in databases like IntAct, BioGRID, and MINT. STRING aggregates all of these plus computational predictions. When you use STRING in Cytoscape next session, the edges represent all the evidence types combined into a confidence score.</div>
+    </div>
+
+    <div class="key-concept">
+      <div class="kc-label">Metabolic Networks — Slide 17</div>
+      <div class="kc-title">What to add beyond the slide</div>
+      <div class="kc-body">Add: metabolic networks are the most mathematically sophisticated type — they're often used in flux balance analysis (FBA), where you solve for the steady-state flow of metabolites through the network. This allows prediction of which metabolic reactions are essential and which are dispensable. The slide correctly notes that nodes can be either metabolites (the chemicals) or enzymes (the catalysts), and the choice affects the network's structure and what questions you can ask with it.</div>
+    </div>
+
+    <div class="key-concept">
+      <div class="kc-label">Genetic Interaction Networks — Slide 18</div>
+      <div class="kc-title">What to add beyond the slide</div>
+      <div class="kc-body">Add: genetic interactions are detected by measuring fitness (growth, survival) when two genes are mutated simultaneously and comparing to what you'd expect from the individual mutations. A negative genetic interaction (synthetic lethality) means mutating gene A and gene B together is far more lethal than either alone — they're in parallel pathways compensating for each other. CRISPR screens now allow detection of genetic interactions at scale. Synthetic lethality is a major cancer therapeutic strategy — find what a tumour depends on given its existing mutations, then target that dependency.</div>
+    </div>
+
+    <div class="key-concept">
+      <div class="kc-label">Gene Regulatory Networks — Slide 19</div>
+      <div class="kc-title">What to add beyond the slide</div>
+      <div class="kc-body">Add: gene regulatory networks are typically inferred from transcriptomic data — RNA-seq or microarray experiments where you measure gene expression across many conditions and use correlation or mutual information to infer which genes regulate which others. ChIP-seq (chromatin immunoprecipitation sequencing) can directly identify which genomic loci a transcription factor binds to, enabling more direct construction of TF → target gene edges. TRRUST and Dorothea are databases of known TF-target relationships used as reference networks.</div>
+    </div>
+
+    <div class="key-concept">
+      <div class="kc-label">Signalling Networks — Slide 20</div>
+      <div class="kc-title">What to add beyond the slide</div>
+      <div class="kc-body">Add: signalling networks are built from curated pathway databases — primarily KEGG, Reactome, and WikiPathways. These databases encode known signalling cascades as directed, signed graphs. For example, in the PI3K-AKT pathway: PI3K phosphorylates PIP2 to PIP3 (activation edge), PIP3 recruits AKT to the membrane (enabling edge), PDK1 phosphorylates and activates AKT (activation edge), AKT phosphorylates and inhibits PTEN (inhibitory edge). The direction and sign of every edge matters for understanding how signals propagate and how perturbations cascade.</div>
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">Connecting all types together</div>
+      <div class="speech">
+        <p>One important note: in real disease biology, these network types are not separate. A protein that's a hub in the PPI network is likely also a key node in a signalling network and may regulate gene expression in a gene regulatory network. The most comprehensive analyses integrate multiple network types — this is called multi-layer network analysis. For this internship we'll focus on PPI networks because they're the most tractable and the most directly connected to drug target identification. But when you read papers that integrate PPI with signalling or with gene regulatory data, you'll now understand why they're doing that.</p>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>1:40 → 1:52 · 12 min for all 5 network types</div>
+</div>
+
+<!-- ══ SLIDE 21: WORKFLOW ══ -->
+<div class="slide">
+  <div class="slide-hd">
+    <div class="slide-num"><div class="sn-label">Slide</div><div class="sn-n">21</div></div>
+    <div class="slide-meta"><div class="slide-title">Systems Biology Workflow — From Disease to Network</div><div class="slide-timing">1:52 — 8 min · this slide needs significant restructuring in delivery</div></div>
+  </div>
+  <div class="slide-body">
+    <div class="slide-content">
+      <div class="slide-content-label">What the slide says</div>
+      Visual showing experimental data → primary databases (IntAct, MINT) or meta-databases (STITCH, STRING, UniHI, APID, IMEx) → Get PPI data → Build network → Identify substructures ↔ Annotation analysis (GO, Reactome).
+    </div>
+
+    <div class="add-note">
+      <div class="add-note-label">Teaching decision — don't name all the databases here</div>
+      <div class="add-note-body">Your instinct is correct. The databases — STRING, Reactome, KEGG, DisGeNET — belong in Session 2 where interns will actually use them. What belongs here is the logic of the workflow: the questions that each step answers. Teach the "why" of the sequence today; the "how" with specific tools comes next session.</div>
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">Reframe the workflow as a sequence of questions</div>
+      <div class="speech">
+        <p>This workflow slide shows a lot of tool names and database logos, but I want to teach you the logic behind it rather than the tools themselves — we'll cover the specific tools in the next session when we're actually using them.</p>
+        <p>The workflow answers a series of questions in sequence. Let me walk through them:</p>
+        <p><strong>Question 1: Which genes are involved in this disease?</strong> This is where we start. We query databases of disease-gene associations to get a list of genes relevant to our disease of interest. In Session 2, you'll do this using DisGeNET, GeneCards, and DISEASES. The output is a gene list.</p>
+        <p><strong>Question 2: How do the proteins encoded by these genes interact?</strong> We take the gene list, find the corresponding proteins, and look up their known physical interactions in a PPI database — primarily STRING for this internship. This gives us the edges of our network. The output is a network file we import into Cytoscape.</p>
+        <p><strong>Question 3: What is the structure of this network?</strong> Now we analyse the network topology. We calculate degree, betweenness centrality, clustering coefficient. We identify hubs and bottlenecks. We run MCODE to find modules. The output is a ranked list of hub-bottleneck proteins and a set of functional modules.</p>
+        <p><strong>Question 4: What do these modules mean biologically?</strong> We take each module's gene list and run GO and KEGG enrichment analysis to understand which biological processes and pathways they represent. The output is pathway annotations for each module — the biological interpretation of the topological structure.</p>
+        <p><strong>Question 5: Which proteins do we target with a drug?</strong> We select hub-bottleneck proteins that sit in disease-relevant modules, have known druggable structures, and have published evidence for their role in the disease. This selection, which you'll do in Session 3, hands off directly to the CADD phase.</p>
+      </div>
+    </div>
+
+    <div class="teach-section ts-board">
+      <div class="ts-label">Write this linear logic on the board — it's the backbone of sessions 1–4</div>
+      <div class="board">
+        Disease name → Disease gene list → PPI network → Topology analysis → Hub-bottleneck proteins → Module enrichment → Drug target selection
+      </div>
+    </div>
+
+    <div class="teach-section ts-say">
+      <div class="ts-label">Close the session</div>
+      <div class="speech">
+        <p>Everything you've learned today supports this pipeline. The graph theory concepts — degree, betweenness, clustering — are the mathematical tools that make step 3 possible. The understanding of what hubs and bottlenecks are makes step 4 interpretable. And knowing the different types of biological networks tells you which data source is appropriate at each step.</p>
+        <p>In the next session, we'll start executing this pipeline. You'll run actual queries against DisGeNET and GeneCards, import gene lists into STRING, and build your first PPI network in Cytoscape. Today was the why — next session is the how.</p>
+        <p><em>[Return to learning outcomes slide]</em> Let's check back on what you were supposed to learn today. Can you explain what systems biology is and why it exists? Can you define a hub, a bottleneck, and a hub-bottleneck? Can you explain the difference between degree centrality and betweenness centrality? If you can answer all three confidently, you're ready for Session 2.</p>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar"><div class="tb-dot"></div>1:52 → 2:00 · 8 min · session ends here</div>
+</div>
+
+<!-- OVERALL NOTES -->
+<div class="add-note" style="margin-top:2rem">
+  <div class="add-note-label">What to add to the slides (optional, if you want to extend beyond 2 hours)</div>
+  <div class="add-note-body">
+    The slides as-is cover everything needed for a strong 90–120 minute session. If you want to extend or add depth, the highest-value additions would be: (1) a <strong>worked example slide</strong> — show a real mini-network of 6–8 proteins with their degree and betweenness values, and walk through calculating which are hub-bottlenecks. This makes the centrality concepts concrete before interns see them in Cytoscape. (2) A <strong>disease case study slide</strong> — show a published RA or T2DM network figure from a paper, point out the hubs, and ask interns to identify which nodes they'd want to drug. Both additions would add 15–20 minutes and require new slides. If timing is tight, skip them here and incorporate into Session 2 as warm-up.
+  </div>
+</div>
+
+<div class="add-note">
+  <div class="add-note-label">What NOT to add here (save for Session 2)</div>
+  <div class="add-note-body">
+    Database logos, specific query parameters for DisGeNET or STRING, Cytoscape interface walkthrough, anything about MCODE or ClueGO specifically, GEO or DEG analysis. All of these belong in Session 2 "Building the Network" where interns are sitting in front of their computers and actually doing these things. Introducing tools before the practical context creates cognitive load without benefit.
+  </div>
+</div>
+
+</div>
+</body>
+</html>
