@@ -37,7 +37,7 @@
 ### Session 2: Building the network:
 
 - [Presentation](Presentations/SysBio_Intern_2_final_compressed.pdf)
-- [Recording]()
+- [Recording](https://nileuniversity-my.sharepoint.com/:v:/g/personal/nmsabry_nu_edu_eg/IQDQQR6nk3voT7YNK8a9LmqkAXaYSedMK3RMW3cMlgXVpOQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=wa4NvP)
 
 ---
 
