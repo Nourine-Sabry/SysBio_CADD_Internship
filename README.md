@@ -34,6 +34,11 @@
 - [Presentation](Presentations/SysBio_Internship_1-1_compressed.pdf)
 - [Recording](https://nileuniversity-my.sharepoint.com/:v:/g/personal/nmsabry_nu_edu_eg/IQDI-UGBAjiaQZVSzdAhXB-HAcn5MDI9lqspjO8A0xW46b4?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=Sth9XZ)
 
+### Session 2: Building the network:
+
+- [Presentation](Presentations/SysBio_Intern_2_final_compressed.pdf)
+- [Recording]()
+
 ---
 
 ## Phase 2: Computer-Aided Drug Discovery
