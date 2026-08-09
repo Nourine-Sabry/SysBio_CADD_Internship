@@ -15,7 +15,7 @@
 | ---------------- | ------: | ---: | ---- | ----------------------------------------------------------------- | ----------------------- | ----------------------- |
 | Phase 1 – SysBio |       1 |    1 | 21/7 | Introduction to systems biology and biological networks           | Theoretical             | —                       |
 | Phase 1 – SysBio |       2 |    1 | 28/7 | Building the network                                              | Theoretical + practical | Project task 1 |
-| Phase 1 – SysBio |       3 |    2 | 30/7 | Modules, sub-modules, hubs, bottlenecks, motifs                   | Theoretical + practical | Project task 2        |
+| Phase 1 – SysBio |       3 |    2 | 30/7 | Inside the network: Hub, modules, & motifs                   | Theoretical + practical | Project task 2        |
 | Phase 1 – SysBio |       4 |    2 | 4/8  | From network to drug target                                       | Theoretical + practical | Project task 3        |
 | Phase 2 – CADD   |       5 |    3 | 6/8  | Introduction to Computer-Aided Drug Discovery                     | Theoretical + practical | —                       |
 | Phase 2 – CADD   |       6 |    3 | 11/8 | Protein visualisation & ligand sourcing                           | Theoretical + practical | Project task 4        |
