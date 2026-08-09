@@ -42,7 +42,7 @@
 ### Session 3: Inside the network: Hubs, modules, & motifs:
 
 - [Presentation](Presentations/SysBio_Intern_3_compressed.pdf)
-- [Recording]()
+- [Recording](https://nileuniversity-my.sharepoint.com/:v:/g/personal/nmsabry_nu_edu_eg/IQD8apPCTCjBQogD9dO3xH9wAcvFa5jRaPuOnIyo49uAVDQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=85cCK7)
 
 ---
 
