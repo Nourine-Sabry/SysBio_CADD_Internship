@@ -17,13 +17,12 @@
 | Phase 1 – SysBio |       2  | Building the network                                              | Theoretical + practical | Project task 1 |
 | Phase 1 – SysBio |       3  | Inside the network: Hub, modules, & motifs                   | Theoretical + practical | Project task 2        |
 | Phase 1 – SysBio |       4  | From network to drug target                                       | Theoretical + practical | Project task 3        |
-| Phase 2 – CADD   |       5  | Introduction to Computer-Aided Drug Discovery                     | Theoretical + practical | —                       |
-| Phase 2 – CADD   |       6  | Protein visualisation & ligand sourcing                           | Theoretical + practical | Project task 4        |
-| Phase 2 – CADD   |       7  | Ligand-based drug design & structure-based drug design            | Theoretical             | —                       |
-| Phase 2 – CADD   |       8  | Pre-docking assessment & library preparation                      | Theoretical + practical | Project task 5        |
-| Phase 2 – CADD   |       9  | Virtual screening                                                 | Theoretical + practical | Project task 6        |
-| Phase 2 – CADD   |      10  | QSAR, pharmacophore, similarity search, ADMET, molecular dynamics | Theoretical + practical | Project – Bonus task    |
-| Phase 2 – CADD   |      11  | What’s next + capstone project discussion                         | Discussion              | —                       |
+| Phase 2 – CADD   |       5  | Introduction to Computer-Aided Drug Discovery + Protein visualisation| Theoretical + practical |Project task 4                      |
+| Phase 2 – CADD   |       6  |  Ligand-based drug design & structure-based drug design                          | Theoretical + practical | —         |
+| Phase 2 – CADD   |       7  | Ligand sourcing, Pre-docking assessment, & library preparation         | Theoretical + practical            | Project task 5                     |
+| Phase 2 – CADD   |       8  | Virtual screening        | Theoretical + practical | Project task 6        |
+| Phase 2 – CADD   |       9  |  QSAR, pharmacophore, similarity search, ADMET, molecular dynamics     | Theoretical + practical | Bonus project task       |
+| Phase 2 – CADD   |      10  |  What’s next + capstone project discussion                      |Capstone project discussion | —     |
 
 ---
 
@@ -46,8 +45,8 @@
 
 ### Session 4: From network to drug target:
 
-- [Presentation]()
-- [Recording]()
+- [Presentation](Presentations/SysBio_4_compressed.pdf)
+- [Recording](https://nileuniversity-my.sharepoint.com/:v:/g/personal/nmsabry_nu_edu_eg/IQARXyb--EF3Q7eglR5G28Q-ARn1lLEqMcZi03E1oFom4K4?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=63Kznj)
 
 ---
 
